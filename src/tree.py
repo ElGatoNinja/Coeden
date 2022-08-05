@@ -1,65 +1,80 @@
+from __future__ import annotations
 from specialClasses import TreeIterator,WildNode,NoNode
+
+
 
 class Node:
     '''Repesents a node in a tree data structure, '''
-    def __init__(self,name: str, value = None, parent = None):
-        self.name = name
-        self.value = value
-        self.__parent = None
-        self._set_parent(parent)
-        self.children = None
+    def __init__(self,key, value = None, parent = None):
+        RESERVED_KEYS = ["__*__","__**__","__<-__"]
+        if key in RESERVED_KEYS:
+            raise ValueError(f'The key "{key}" has an special function and it is reserved')
 
-    def _get_parent(self):
+        self.key = key
+        self.value = value
+        self.__parent : Node | None = None
+        self.__children: dict | None = None
+
+    def __set_child(self, child: Node):
+        if self.__children is None:
+            self.__children = {}
+        if child.key in self.__children:
+            raise ValueError(f'This node already has a child with key: "{child.key}".')
+
+        child.__parent = self
+        self.__children[child.key] = child
+    
+    @property
+    def parent(self):
         return self.__parent
     
-    def _set_parent(self, parent):
-        if parent is not None:
-            self.__parent = parent
-            if self.__parent.children is None:
-                self.__parent.children = {}
-            self.__parent.children[self.name] = self
-        else:
+    @parent.setter
+    def parent(self, parent: Node | None):
+        if parent is None:
             #If parent is removed this node is also removed form the parent childs
             if self.__parent is not None:
-                del self.__parent.children[self.name]
+                del self.__parent.__children[self.key]
             self.__parent = None
+        else:
+            parent.__set_child(self) #also sets self parent
 
-    parent = property(_get_parent, _set_parent)
 
-    def new_leaf(self,name: str, value=None):
-        '''Create a node as a child of the caller node. If succesful returns true, if node already exist return false'''
-        if not self.children:
-            self.children = {}
-        if name in self.children:
+    def try_new_leaf(self,key, value=None):
+        '''Create a node as a child of the caller node. If succesful returns true,
+        if node already exist return false'''
+        try:
+            self.__set_child(Node(key,value))
+            return True
+        except ValueError:
             return False
 
-        self.children[name] = Node(name,value)
-        self.children[name].parent = self
-        return True
-
-    def try_remove_leaf(self, name):
-        '''Try to remove a leaf from the tree by name, if success returns True'''
+    def try_remove_leaf(self, key):
+        '''Try to remove a leaf from the tree by key, if success returns True'''
         #not a leaf if it has children
-        if self[name].children is True:
+        if self[key].children is True:
             return False
         try:
-            self[name].parent = None
-            del self.children[name]
+            self[key].parent = None
+            del self.__children[key]
             return True
         except:
             return False
 
-    def __getitem__(self, child_name: str):
-        if child_name == "__*__":
+    def __getitem__(self, child_key):
+        if child_key == "__*__":
             nodes = []
-            for (_,node) in self.children.items():
+            for (_,node) in self.__children.items():
                 nodes.append(node)
             return WildNode(nodes)
 
         try:
-            return self.children[child_name]
+            return self.__children[child_key]
         except KeyError:
             return None
+    
+    def __delitem__(self, child_key):
+        self.__children[child_key].__parent = None
+        del self.__children[child_key]
     
     def deep_first_iter(self):
         '''Create an iterator with the deep-first search algorithm'''
@@ -72,7 +87,7 @@ class Node:
     def print_tree(self):
         '''Print to console a graphical representation of the tree starting in the current node'''
         for (node, depth) in self.deep_first_iter():
-            line = f'{(depth) * "   "}{node.name}'
+            line = f'{(depth) * "   "}{node.key}'
             if node.value is not None:
                 line += f' -> {node.value}'
             print(line)
