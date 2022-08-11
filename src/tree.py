@@ -12,29 +12,29 @@ class Node:
 
         self.key = key
         self.value = value
-        self.__parent : Node | None = None
-        self.__children: dict | None = None
+        self._parent : Node | None = None
+        self._children: dict = {}
 
     def __set_child(self, child: Node):
-        if self.__children is None:
-            self.__children = {}
-        if child.key in self.__children:
+        if self._children is None:
+            self._children = {}
+        if child.key in self._children:
             raise ValueError(f'This node already has a child with key: "{child.key}".')
 
-        child.__parent = self
-        self.__children[child.key] = child
+        child._parent = self
+        self._children[child.key] = child
     
     @property
     def parent(self):
-        return self.__parent
+        return self._parent
     
     @parent.setter
     def parent(self, parent: Node | None):
         if parent is None:
             #If parent is removed this node is also removed form the parent childs
-            if self.__parent is not None:
-                del self.__parent.__children[self.key]
-            self.__parent = None
+            if self._parent is not None:
+                del self._parent._children[self.key]
+            self._parent = None
         else:
             parent.__set_child(self) #also sets self parent
 
@@ -55,7 +55,7 @@ class Node:
             return False
         try:
             self[key].parent = None
-            del self.__children[key]
+            del self._children[key]
             return True
         except:
             return False
@@ -63,18 +63,20 @@ class Node:
     def __getitem__(self, child_key):
         if child_key == "__*__":
             nodes = []
-            for (_,node) in self.__children.items():
+            for (_,node) in self._children.items():
                 nodes.append(node)
             return WildNode(nodes)
 
         try:
-            return self.__children[child_key]
+            return self._children[child_key]
         except KeyError:
             return None
     
     def __delitem__(self, child_key):
-        self.__children[child_key].__parent = None
-        del self.__children[child_key]
+        if child_key not in self._children:
+            raise KeyError(f'Node "{self.key}" is not linked to a node named "{child_key}"')
+        self._children[child_key]._parent = None
+        del self._children[child_key]
     
     def deep_first_iter(self):
         '''Create an iterator with the deep-first search algorithm'''
