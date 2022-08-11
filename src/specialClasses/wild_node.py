@@ -8,7 +8,7 @@ class WildNode:
     def __init__(self,nodes: list[Node]):
         self.__nodes = nodes
 
-    def __getitem__(self, name):
+    def __getitem__(self, name: str):
         if name == "__*__":
             next_level_nodes = []
             for node in self.__nodes:
