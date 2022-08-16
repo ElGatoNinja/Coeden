@@ -1,4 +1,5 @@
 from __future__ import annotations
+from ast import match_case
 from specialClasses import TreeIterator,WildNode,NoNode
 
 
@@ -62,16 +63,22 @@ class Node:
             return False
 
     def __getitem__(self, child_key) -> Node | NoNode | WildNode:
-        if child_key == "__*__":
-            nodes = []
-            for (_,node) in self._children.items():
-                nodes.append(node)
-            return WildNode(nodes)
-
-        try:
-            return self._children[child_key]
-        except KeyError:
-            return NoNode(child_key, self)
+        match child_key:
+            case "__*__":
+                nodes = []
+                for (_,node) in self._children.items():
+                    nodes.append(node)
+                return WildNode(nodes)
+            case "__**__":
+                pass
+            case "__<-__":
+                return self.parent
+            case _:
+                try:
+                    return self._children[child_key]
+                except KeyError:
+                    return NoNode(child_key, self)
+        
     
     def __delitem__(self, child_key):
         if child_key not in self._children:
@@ -94,5 +101,6 @@ class Node:
             if node.value is not None:
                 line += f' -> {node.value}'
             print(line)
+
 
                 
