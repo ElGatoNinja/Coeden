@@ -13,6 +13,7 @@ class Node:
         self.key = key
         self.value = value
         self._parent : Node | None = None
+        self.parent = parent
         self._children: dict = {}
 
     def __set_child(self, child: Node):
@@ -60,7 +61,7 @@ class Node:
         except:
             return False
 
-    def __getitem__(self, child_key):
+    def __getitem__(self, child_key) -> Node | NoNode | WildNode:
         if child_key == "__*__":
             nodes = []
             for (_,node) in self._children.items():
@@ -70,7 +71,7 @@ class Node:
         try:
             return self._children[child_key]
         except KeyError:
-            return None
+            return NoNode(child_key, self)
     
     def __delitem__(self, child_key):
         if child_key not in self._children:
