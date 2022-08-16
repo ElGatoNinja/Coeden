@@ -16,7 +16,7 @@ class CreateNode(unittest.TestCase):
         tree.try_new_leaf("shortcut")
         self.assertEqual(tree["shortcut"], tree._children["shortcut"])
 
-    def test_add_new_leaf(self):
+    def test_try_add_new_leaf(self):
         tree = Node("root")
         tree.try_new_leaf("node 1")
 
@@ -41,9 +41,6 @@ class CreateNode(unittest.TestCase):
         del tree["node 2"]
         self.assertEqual(tree._children, {})
 
-    def test_raise_if_children_modified(self):
-        tree = Node("root")
-
 
 if __name__ == "__main__":
-     unittest.main()
+    unittest.main()
