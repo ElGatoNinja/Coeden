@@ -1,5 +1,5 @@
 from __future__ import annotations
-from specialClasses import Node
+from src.specialClasses import Node
 
 
 

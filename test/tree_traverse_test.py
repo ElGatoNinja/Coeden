@@ -1,5 +1,5 @@
 import unittest
-from value_tree import ValueNode
+from src.value_tree import ValueNode
 
 class TraverseTree(unittest.TestCase):
     def setUp(self) -> None:

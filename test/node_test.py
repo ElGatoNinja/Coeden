@@ -1,8 +1,5 @@
 import unittest
-
-
-import unittest
-from specialClasses import Node
+from src import Node
 
 class CreateNodes(unittest.TestCase):
     def test_single_node(self):
