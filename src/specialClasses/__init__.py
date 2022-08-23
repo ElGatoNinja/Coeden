@@ -1,3 +1,2 @@
 from specialClasses.tree_iterator import TreeIterator
-from specialClasses.wild_node import WildNode
-from specialClasses.no_node import NoNode
+from specialClasses.base_node import Node
