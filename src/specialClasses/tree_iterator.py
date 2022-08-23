@@ -2,7 +2,7 @@ from __future__ import annotations
 from collections import deque
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from tree import Node
+    from value_tree import Node
 
 
 class TreeIterator:

@@ -1,5 +1,5 @@
 import unittest
-from tree import ValueNode
+from value_tree import ValueNode
 
 class CreateNode(unittest.TestCase):
     def test_single_node_value(self):

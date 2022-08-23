@@ -1,5 +1,5 @@
 import unittest
-from tree import ValueNode
+from value_tree import ValueNode
 from specialClasses.base_node import NoNode
 
 class NoNodes(unittest.TestCase):
