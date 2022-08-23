@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='forest',
+    name='coeden',
     version='0.1.0',
     license='MIT',
     author="Jaime G Alonso",
