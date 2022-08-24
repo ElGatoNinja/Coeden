@@ -26,7 +26,7 @@ class TreeIterator:
             raise StopIteration
 
         (node, depth) = self._pop_next_node()
-        if node.children:
-            for _,child in node.children.items():
+        if node._children:
+            for _,child in node._children.items():
                 self.queue.append((child, depth + 1))
         return (node,depth)

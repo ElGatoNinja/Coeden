@@ -33,7 +33,7 @@ class ValueNode(Node):
     def try_remove_leaf(self, key):
         '''Try to remove a leaf from the tree by key, if success returns True'''
         #not a leaf if it has children
-        if self[key].children is True:
+        if self[key]._children is True:
             return False
         try:
             self[key].parent = None
