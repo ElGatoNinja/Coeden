@@ -22,11 +22,8 @@ jobs:
       - name: Run Tests
         run: python -m unittest discover -v -s ./ -p *test*.py
 
-      - name: Install bult utilities
-        run: python3 -m pip install --upgrade build
-
       - name: Build Package
-        run: python3 -m build
+        run: python3 -m pip install --upgrade build; python3 -m build
 
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
