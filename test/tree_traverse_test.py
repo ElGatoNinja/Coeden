@@ -58,5 +58,12 @@ class TraverseTree(unittest.TestCase):
         self.assertEqual(berry.key, "berry")
         self.assertEqual(mango,None)
 
+    def test_wildcard_iterate(self):
+        node_list = []
+        for company in self.tree["tech companies"]["__*__"]:
+            node_list.append(company.key)
+
+        self.assertEqual(node_list, ["apple","microsoft","google","meta"])
+
 if __name__ == "__main__":
     unittest.main()

@@ -146,8 +146,12 @@ class NodeSet(NodeTraverse):
 
     def __iter__(self):
         self.__iter_index = 0
+        return self
 
     def __next__(self):
+        if self.__iter_index == len(self.__nodes):
+            raise StopIteration
+
         node = self.__nodes[self.__iter_index]
         self.__iter_index += 1
         return node
