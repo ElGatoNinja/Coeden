@@ -1,5 +1,5 @@
 from __future__ import annotations
-from src.specialClasses import Node
+from coeden.specialClasses.base_node import Node
 
 
 

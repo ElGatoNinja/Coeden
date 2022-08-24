@@ -1,5 +1,5 @@
 import unittest
-from src.value_tree import ValueNode
+from coeden import ValueNode
 
 class CreateNode(unittest.TestCase):
     def test_single_node_value(self):

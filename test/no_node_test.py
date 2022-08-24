@@ -1,6 +1,6 @@
 import unittest
-from src import ValueNode
-from src.specialClasses.base_node import NoNode
+from coeden import ValueNode
+from coeden.specialClasses.base_node import NoNode
 
 class NoNodes(unittest.TestCase):
     def test_get_unexistent_node_returns_nonode(self):

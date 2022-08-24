@@ -1,5 +1,5 @@
 import unittest
-from src import Node
+from coeden import Node
 
 class CreateNodes(unittest.TestCase):
     def test_single_node(self):

@@ -1,7 +1,7 @@
 from __future__ import annotations
 import abc
 from collections import deque
-from src.specialClasses.tree_iterator import TreeIterator
+from coeden.specialClasses.tree_iterator import TreeIterator
 
 class NodeTraverse(abc.ABC):
     @abc.abstractclassmethod
