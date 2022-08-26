@@ -121,7 +121,7 @@ Wilcards allow to consider every node of a level, for instance, we can search fo
 ```
 marine = color_tree["__*__"]["marine"]  # Marine is an iterable set of nodes
 ```
-but wildcards return sets of nodes and not nodes so there are two options, if you know that there is going to be only one node you can use the special key `"__?__"` that converts the set to a node again its length is exactly one. If there are more the sets can be iterated in a loop.
+but wildcards return sets of nodes and not nodes so there are two options, if you know that there is going to be only one node you can use the special key `"__?__"` that converts the set to a node again if its length is exactly one. If there are more the sets can be iterated in a loop.
 
 ```
 marine = color_tree["__*__"]["marine"]["__?__"]  # Now it is the node 
