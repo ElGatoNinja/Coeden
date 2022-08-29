@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "coeden"
-version = "0.1.5"
+version = "0.2.0"
 authors = [
   { name="JaimeGAlonso", email="JaimeGAlonso@outlook.com" },
 ]
@@ -20,5 +20,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/ElGatoNinja/Trees"
-"Bug Tracker" = "https://github.com/ElGatoNinja/Trees/issues"
+"Homepage" = "https://github.com/ElGatoNinja/Coeden"
+"Bug Tracker" = "https://github.com/ElGatoNinja/Coeden/issues"
