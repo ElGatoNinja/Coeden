@@ -29,8 +29,17 @@ class NoNodes(unittest.TestCase):
         tree = ValueNode("root")
         tree["new 1"]["new 2"].create_all()
 
-        self.assertNotEqual(tree["new 1"]["new 2"], None)
-        self.assertEqual(tree["new 1"]["new 2"].parent.key, "new 1")
+        self.assertEqual(tree["new 1"]["new 2"].key, "new 2")
+        self.assertEqual(tree["new 1"]["new 2"]["__<-__"].key, "new 1")
+
+    def test_nonodes_are_falsey(self):
+        tree = ValueNode("root")
+        self.assertFalse(tree["unexistent 1"]["unexistent 2"])
+    
+    def test_nodes_are_truthy(self):
+        tree = ValueNode("root")
+        tree.new_leaf("existent 1")
+        self.assertTrue(tree["existent 1"])
 
 
 if __name__ == "__main__":

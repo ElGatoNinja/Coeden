@@ -167,6 +167,9 @@ class NoNode(NodeTraverse):
         self.__no_key = key
         self.__no_parent = parent
 
+    def __bool__(self):
+        return False
+
     def __eq__(self, other):
         return None is other
     def __ne__(self, other):
