@@ -1,7 +1,7 @@
 from __future__ import annotations
 import abc
 from collections import deque
-from coeden.specialClasses.tree_iterator import TreeIterator
+from tree_iterator import TreeIterator
 
 class NodeTraverse(abc.ABC):
     @abc.abstractclassmethod
@@ -104,6 +104,29 @@ class Node(NodeTraverse):
         '''Create and iterator with the breadth-first search algorithm'''
         return TreeIterator(self,False)
 
+    def print_tree(self):
+        '''Print to console a graphical representation of the tree starting in the current node'''
+        iterator = self.deep_first_iter()
+        node, depth = next(iterator)
+        print(node.key)
+        islast = [0]
+        for (node, depth) in iterator:
+            if len(islast) < depth + 1:
+                islast.append(0)
+            if islast[depth] == 0:
+                islast[depth] = len(node.parent._children)
+            islast[depth] -= 1
+
+            tree_lines = ""
+            for i in range(0,depth):
+                if islast[i] >= 1:
+                    tree_lines += "|  "
+                else:
+                    tree_lines += "   "
+
+            line = f'{tree_lines}|-- {node.key}'
+            print(line)
+
 
 class NodeSet(NodeTraverse):
     '''Works as "any node"'''
@@ -187,3 +210,18 @@ class NoNode(NodeTraverse):
 
         for key in chain_keys:
             last_real_node = Node(key, parent=last_real_node)
+
+
+if __name__ == "__main__":
+    tree = Node("root")
+    tree["A"]["robot"]["ninja"].create_all()
+    tree["A"]["dragon"]["warrior"]["tuna"].create_all()
+    tree["A"]["smoke"]["potato"]["metaverse"].create_all()
+    tree["A"]["smoke"]["potato"].new_leaf("web")
+    tree["A"]["smoke"]["potato"].new_leaf("sadness")
+    tree["A"]["smoke"]["potato"].new_leaf("banana")
+    tree["B"]["broom"]["radar"].create_all()
+    tree["B"]["broom"].new_leaf("mock")
+    tree["B"].new_leaf("love")
+
+    tree.print_tree()
