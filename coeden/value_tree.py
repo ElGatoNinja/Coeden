@@ -44,11 +44,32 @@ class ValueNode(Node):
 
     def print_tree(self):
         '''Print to console a graphical representation of the tree starting in the current node'''
-        for (node, depth) in self.deep_first_iter():
-            line = f'{(depth) * "   "}{node.key}'
+        iterator = self.deep_first_iter()
+        node, depth = next(iterator)
+        line = node.key
+        if node.value is not None:
+                line += f' -> {node.value}'
+        print(line)
+        islast = [0]
+        for (node, depth) in iterator:
+            if len(islast) < depth + 1:
+                islast.append(0)
+            if islast[depth] == 0:
+                islast[depth] = len(node.parent._children)
+            islast[depth] -= 1
+
+            tree_lines = ""
+            for i in range(0,depth):
+                if islast[i] >= 1:
+                    tree_lines += "|  "
+                else:
+                    tree_lines += "   "
+
+            line = f'{tree_lines}|-- {node.key}'
             if node.value is not None:
                 line += f' -> {node.value}'
             print(line)
+
 
 
                 
