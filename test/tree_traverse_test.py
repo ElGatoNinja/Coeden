@@ -65,5 +65,12 @@ class TraverseTree(unittest.TestCase):
 
         self.assertEqual(node_list, ["apple","microsoft","google","meta"])
 
+    def test_wildcard_parent(self):
+        node_list = []
+        for color in self.tree["__*__"]["__*__"]["apple"]["__<-__"]:
+            node_list.append(color.key)
+
+        self.assertEqual(node_list, ["red","green"])
+
 if __name__ == "__main__":
     unittest.main()

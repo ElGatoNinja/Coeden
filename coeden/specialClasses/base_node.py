@@ -155,7 +155,7 @@ class NodeSet(NodeTraverse):
         for node in self.__nodes:   
             special = self._match_special_keys(node,key)
             if special is not None:
-                if isinstance(special,list):
+                if isinstance(special,NodeSet):
                     next_level_nodes += special
                 else:
                     next_level_nodes.append(special)
